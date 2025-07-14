@@ -181,6 +181,28 @@ $accent-color: #e74c3c;
 4. Mettre à jour la sidebar dans `templates/base.html.twig`
 5. Ajouter la carte correspondante sur la page d'accueil
 
+## 🧩 Structure des pages modulaires (Club, Équipes, Tournois...)
+
+- **Titre et description** en haut de chaque page, centrés, sans margin-top, stylés via SCSS modulaire (ex : `.tournoi-page-title`, `.club-page-title`, `.team-page-title`)
+- **Bouton d'action principal** (Créer une carte/équipe/tournoi) centré, gros, jaune, avec icône, visible uniquement pour les rôles autorisés (admin, président, super admin, etc.), stylé via `.admin-action-btn`
+- **Bouton "Éditer"** bleu sur chaque carte, même style partout, visible pour les rôles autorisés
+- **Aucun style inline dans les fichiers Twig** : tout le style est dans des fichiers SCSS modulaires dans `assets/styles/components/`
+- **Droits d'accès** gérés dans le Twig avec `is_granted()`
+- **Liens EasyAdmin** pour créer/éditer redirigent vers le CRUD correspondant avec le FQCN PHP (un seul antislash)
+
+### Exemple d'ajout d'un nouveau menu (ex : "Partenaires")
+1. Créer le contrôleur CRUD EasyAdmin (ex : `PartenaireCrudController.php`)
+2. Créer le contrôleur public (ex : `PartenaireController.php`)
+3. Créer le template Twig (ex : `templates/partenaire/index.html.twig`) avec :
+   - Titre et description en haut
+   - Bouton "Créer un partenaire" (admin-action-btn)
+   - Boucle sur les partenaires avec bouton "Éditer" sur chaque carte
+4. Créer un fichier SCSS modulaire (ex : `_partenaire-page.scss`) pour le style de la page
+5. Importer ce SCSS dans `app.scss`
+6. Ajouter le menu dans le Dashboard EasyAdmin avec les bons droits
+
+**Cette structure permet d'ajouter/modifier n'importe quel menu très rapidement et de garder une cohérence visuelle et technique sur tout le projet.**
+
 ## 🔧 Configuration
 
 ### Webpack Encore
